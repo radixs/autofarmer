@@ -14,7 +14,11 @@
         </header>
 
         <section class="grid gap-6 md:grid-cols-2">
-            <form @submit.prevent="handleSubmit" class="space-y-4 rounded-xl bg-white p-5 shadow-sm">
+            <form
+                @submit.prevent="handleSubmit"
+                class="space-y-4 rounded-xl bg-white p-5 shadow-sm"
+                novalidate
+            >
                 <div class="space-y-1">
                     <label class="block text-sm font-medium text-slate-700" for="title">Title</label>
                     <input
@@ -193,6 +197,16 @@ const handleSubmit = async () => {
         return;
     }
 
+    let recordedAt = null;
+    if (form.recorded_at) {
+        const parsed = new Date(form.recorded_at);
+        if (Number.isNaN(parsed.getTime())) {
+            notification.value = 'Recorded at must be a valid date/time.';
+            return;
+        }
+        recordedAt = parsed.toISOString();
+    }
+
     submitting.value = true;
     notification.value = '';
 
@@ -202,7 +216,7 @@ const handleSubmit = async () => {
             payload,
             source: form.source || 'gui',
             status: form.status || 'new',
-            recorded_at: form.recorded_at || null,
+            recorded_at: recordedAt,
         });
         notification.value = 'Entry stored successfully.';
         form.title = '';
