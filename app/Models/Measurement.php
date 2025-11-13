@@ -21,7 +21,7 @@ class Measurement extends Model
 
     protected $casts = [
         'value' => 'float',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'created_at' => 'immutable_datetime',
+        'updated_at' => 'immutable_datetime',
     ];
 }

@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-screen bg-slate-950 text-slate-100">
-        <div class="mx-auto flex h-screen max-w-screen-2xl flex-col gap-6 p-6">
+        <div class="flex min-h-screen w-full flex-col gap-6 p-6">
             <header class="flex items-center justify-between">
                 <div>
                     <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Autofarmer</p>
@@ -10,7 +10,7 @@
             </header>
 
             <div class="flex flex-1 gap-6 overflow-hidden">
-                <div class="flex w-1/4 flex-col gap-6">
+                <div class="flex w-1/3 min-w-[360px] flex-col gap-6">
                     <CurrentMeasurementsPanel
                         :measurements="currentMeasurements"
                         :definitions="definitions"
@@ -24,7 +24,7 @@
                         @submit="handleManualSubmit"
                     />
                 </div>
-                <div class="flex w-3/4 flex-col gap-6">
+                <div class="flex w-3/4 flex-1 flex-col gap-6">
                     <HistoryTable
                         :history="measurementHistory"
                         :filters="filters"

@@ -26,13 +26,14 @@ class MeasurementRepository
 
     public function fetchLatestPerType(): Collection
     {
-        $subQuery = Measurement::select('name', DB::raw('MAX(created_at) as max_created_at'))
-            ->groupBy('name');
+        $sub = Measurement::query()
+            ->select('*', DB::raw('ROW_NUMBER() OVER (PARTITION BY name ORDER BY created_at DESC, id DESC) AS rn'));
 
-        return Measurement::joinSub($subQuery, 'latest_measurements', function ($join) {
-            $join->on('measurements.name', '=', 'latest_measurements.name');
-            $join->on('measurements.created_at', '=', 'latest_measurements.max_created_at');
-        })->orderBy('measurements.name')->get();
+        return Measurement::query()
+            ->fromSub($sub, 'ranked_measurements')
+            ->where('rn', 1)
+            ->orderBy('name')
+            ->get();
     }
 
     public function fetchHistory(MeasurementFilterData $filters, MeasurementInterval $interval): LengthAwarePaginator
@@ -40,11 +41,11 @@ class MeasurementRepository
         $query = DB::table($interval->table());
 
         if ($filters->dateFrom) {
-            $query->where('range_start_at', '>=', $filters->dateFrom->toDateTimeString());
+            $query->where('range_end_at', '>=', $filters->dateFrom->toDateTimeString());
         }
 
         if ($filters->dateTo) {
-            $query->where('range_end_at', '<=', $filters->dateTo->toDateTimeString());
+            $query->where('range_start_at', '<=', $filters->dateTo->toDateTimeString());
         }
 
         if (! empty($filters->names)) {

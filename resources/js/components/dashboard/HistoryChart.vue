@@ -2,7 +2,6 @@
     <section class="flex h-full flex-col rounded-3xl bg-slate-900/60 p-5 shadow-lg shadow-black/40">
         <header class="mb-2">
             <p class="text-xs uppercase tracking-wide text-slate-400">Graph</p>
-            <p class="text-lg font-semibold text-white">{{ title }}</p>
         </header>
         <div class="flex-1">
             <Line :data="chartData" :options="chartOptions" />
@@ -16,6 +15,8 @@ import {
     Chart,
     LineElement,
     PointElement,
+    LineController,
+    ScatterController,
     LinearScale,
     CategoryScale,
     Tooltip,
@@ -23,7 +24,7 @@ import {
 } from 'chart.js';
 import { Line } from 'vue-chartjs';
 
-Chart.register(LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend);
+Chart.register(LineController, ScatterController, LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend);
 
 const props = defineProps({
     history: {
@@ -48,6 +49,29 @@ const palette = ['#10b981', '#38bdf8', '#f472b6', '#facc15', '#f97316', '#c084fc
 
 const definitionMap = computed(() => props.definitions.reduce((carry, item) => ((carry[item.slug] = item), carry), {}));
 
+const axisMeta = computed(() => {
+    const meta = {};
+
+    (props.history.data ?? []).forEach((row) => {
+        const definition = definitionMap.value[row.name];
+        if (! definition) {
+            return;
+        }
+
+        const unit = definition.unit || '';
+        if (! meta[unit]) {
+            meta[unit] = {
+                axisId: axisIdForUnit(unit),
+                unit,
+                range: definition.range ?? null,
+                positionIndex: Object.keys(meta).length,
+            };
+        }
+    });
+
+    return meta;
+});
+
 const labels = computed(() => {
     return (props.history.data ?? []).map((row) => formatLocal(row.range_start_at));
 });
@@ -65,6 +89,9 @@ const datasets = computed(() => {
     const collections = [];
     Object.entries(grouped).forEach(([slug, rows], index) => {
         const color = palette[index % palette.length];
+        const definition = definitionMap.value[slug];
+        const unit = definition?.unit ?? '';
+        const axis = axisMeta.value[unit] ?? { axisId: axisIdForUnit(unit) };
         collections.push({
             type: 'line',
             label: `${getLabel(slug)} avg`,
@@ -73,6 +100,7 @@ const datasets = computed(() => {
             backgroundColor: color,
             tension: 0.3,
             fill: false,
+            yAxisID: axis.axisId,
         });
         collections.push({
             type: 'scatter',
@@ -82,15 +110,17 @@ const datasets = computed(() => {
             pointBackgroundColor: color,
             pointRadius: 4,
             showLine: false,
+            yAxisID: axis.axisId,
         });
         collections.push({
             type: 'scatter',
             label: `${getLabel(slug)} min`,
             data: rows.map((row, idx) => ({ x: labels.value[idx], y: row.value_min })),
-            pointBorderColor: '#0f172a',
-            pointBackgroundColor: '#0f172a',
+            pointBorderColor: toRgba(color, 0.35),
+            pointBackgroundColor: toRgba(color, 0.35),
             pointRadius: 4,
             showLine: false,
+            yAxisID: axis.axisId,
         });
     });
 
@@ -102,7 +132,7 @@ const chartData = computed(() => ({
     datasets: datasets.value,
 }));
 
-const chartOptions = {
+const chartOptions = computed(() => ({
     responsive: true,
     maintainAspectRatio: false,
     interaction: {
@@ -126,17 +156,63 @@ const chartOptions = {
             ticks: { color: '#94a3b8' },
             grid: { color: '#1e293b' },
         },
-        y: {
-            ticks: { color: '#94a3b8' },
-            grid: { color: '#1e293b' },
-        },
+        ...buildAxisScales(),
     },
-};
-
-const title = computed(() => `${props.filters.interval.charAt(0).toUpperCase() + props.filters.interval.slice(1)} trend`);
+}));
 
 function getLabel(slug) {
     return definitionMap.value[slug]?.label ?? slug;
+}
+
+function axisIdForUnit(unit) {
+    return `axis-${unit.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'other'}`;
+}
+
+function buildAxisScales() {
+    const config = {};
+    const axes = Object.values(axisMeta.value);
+
+    axes.forEach((axis, index) => {
+        const position = index % 2 === 0 ? 'left' : 'right';
+        const range = axis.range;
+        const span = range ? range.max - range.min || 1 : 1;
+
+        config[axis.axisId] = {
+            type: 'linear',
+            display: true,
+            position,
+            ticks: { color: '#94a3b8' },
+            grid: {
+                color: index === 0 ? '#1e293b' : 'transparent',
+                drawOnChartArea: index === 0,
+            },
+            title: {
+                display: true,
+                text: axis.unit || 'value',
+                color: '#cbd5f5',
+            },
+            suggestedMin: range ? range.min - span * 0.5 : undefined,
+            suggestedMax: range ? range.max + span * 0.5 : undefined,
+        };
+    });
+
+    if (! axes.length) {
+        config.y = {
+            type: 'linear',
+            ticks: { color: '#94a3b8' },
+            grid: { color: '#1e293b' },
+        };
+    }
+
+    return config;
+}
+
+function toRgba(hex, alpha) {
+    const bigint = parseInt(hex.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
 function formatLocal(value) {

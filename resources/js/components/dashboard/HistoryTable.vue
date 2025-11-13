@@ -3,7 +3,6 @@
         <div class="flex flex-wrap items-center justify-between gap-4">
             <div>
                 <p class="text-xs uppercase tracking-wide text-slate-400">Measurement history</p>
-                <p class="text-lg font-semibold text-white">{{ activeLabel }} overview</p>
             </div>
             <div class="flex flex-wrap gap-3 text-xs text-slate-400">
                 <label class="flex items-center gap-2">
@@ -256,5 +255,4 @@ const toUtc = (value) => {
     );
 };
 
-const activeLabel = computed(() => intervals.find((option) => option.value === props.filters.interval)?.label ?? 'Hourly');
 </script>

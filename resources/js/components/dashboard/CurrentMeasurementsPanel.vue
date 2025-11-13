@@ -1,45 +1,54 @@
 <template>
-    <section class="flex h-full flex-col rounded-3xl bg-slate-900/70 p-5 shadow-lg shadow-black/40">
+    <section class="flex h-full flex-col rounded-3xl bg-slate-900/70 p-4 shadow-lg shadow-black/40">
         <header class="mb-4">
             <p class="text-xs uppercase tracking-wide text-slate-400">Current measurements</p>
-            <p class="text-lg font-semibold text-white">Live snapshot</p>
             <p class="text-xs text-slate-500">Times shown in {{ timezone }}</p>
         </header>
-        <div class="flex-1 space-y-3 overflow-y-auto pr-2">
-            <article
-                v-for="item in decoratedMeasurements"
-                :key="item.name"
-                class="rounded-2xl border border-slate-800/80 bg-slate-900/80 p-3"
-            >
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-semibold text-white">{{ item.label }}</p>
-                        <p class="text-[11px] uppercase tracking-wide text-slate-500">{{ item.source }}</p>
-                    </div>
-                    <p
-                        class="text-xl font-bold"
-                        :class="[
-                            item.outOfRange ? 'text-red-400 animate-pulse-fast' : 'text-emerald-300',
-                        ]"
+        <div class="flex-1 overflow-y-auto">
+            <table class="min-w-full text-left text-xs text-slate-300">
+                <thead>
+                    <tr class="border-b border-slate-800 text-[11px] uppercase tracking-wide text-slate-500">
+                        <th class="py-2 pr-3">Metric</th>
+                        <th class="py-2 pr-3">Value</th>
+                        <th class="py-2 pr-3">Source</th>
+                        <th class="py-2 pr-3">Range</th>
+                        <th class="py-2 pr-3">Recorded</th>
+                        <th class="py-2 pr-3">Elapsed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        v-for="item in decoratedMeasurements"
+                        :key="item.name"
+                        class="border-b border-slate-800/40 text-sm"
                     >
-                        {{ item.value }}<span class="text-xs font-medium text-slate-400"> {{ item.unit }}</span>
-                    </p>
-                </div>
-                <div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-slate-400">
-                    <span>
-                        Recorded
-                        <span :class="item.isStale ? 'text-sky-300 animate-pulse-slow font-semibold' : 'text-white'">
-                            {{ item.displayTime }}
-                        </span>
-                    </span>
-                    <span>•</span>
-                    <span>{{ item.timeAgo }} ago</span>
-                    <span v-if="item.range" class="rounded-full bg-slate-800 px-2 py-[1px]">
-                        {{ item.range.min }} – {{ item.range.max }} {{ item.unit }}
-                    </span>
-                </div>
-            </article>
-            <p v-if="!decoratedMeasurements.length" class="text-sm text-slate-500">No measurements recorded yet.</p>
+                        <td class="py-2 pr-3 font-semibold text-white">{{ item.label }}</td>
+                        <td class="py-2 pr-3">
+                            <span
+                                class="font-bold"
+                                :class="[item.outOfRange ? 'text-red-400 animate-pulse-fast' : 'text-emerald-300']"
+                            >
+                                {{ item.value }}
+                            </span>
+                            <span class="pl-1 text-[11px] text-slate-400">{{ item.unit }}</span>
+                        </td>
+                        <td class="py-2 pr-3 uppercase text-[10px] tracking-wide text-slate-500">{{ item.source }}</td>
+                        <td class="py-2 pr-3 text-[11px] text-slate-400">
+                            <span v-if="item.range">{{ item.range.min }} – {{ item.range.max }}</span>
+                            <span v-else>—</span>
+                        </td>
+                        <td class="py-2 pr-3 text-[11px] text-slate-400">
+                            <span :class="item.isStale ? 'text-sky-300 animate-pulse-slow font-semibold' : 'text-white'">
+                                {{ item.displayTime }}
+                            </span>
+                        </td>
+                        <td class="py-2 pr-3 text-[11px] text-slate-400">{{ item.timeAgo }}</td>
+                    </tr>
+                    <tr v-if="!decoratedMeasurements.length">
+                        <td class="py-4 text-center text-slate-500" colspan="6">No measurements recorded yet.</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </section>
 </template>

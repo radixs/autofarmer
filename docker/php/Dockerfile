@@ -17,7 +17,7 @@ RUN apk add --no-cache \
     mysql-client
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-    && docker-php-ext-install pdo_mysql bcmath intl gd opcache
+    && docker-php-ext-install pdo_mysql bcmath intl gd opcache pcntl
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
