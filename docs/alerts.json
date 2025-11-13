@@ -1,0 +1,228 @@
+{
+  "parameters": {
+    "temperature": {
+      "unit": "C",
+      "ideal_min": 19,
+      "ideal_max": 21,
+      "alerts": {
+        "too_low": {
+          "severity": "warning",
+          "message": "Water temperature is below the target range. Cold water slows metabolism and can stress fish and invertebrates.",
+          "quick_fix": "Gradually warm the room or temporarily use an external heat source near the tank (never direct contact), and reduce drafts around the aquarium. Avoid rapid temperature swings (>1–2°C per hour).",
+          "long_term": "Choose livestock that matches your natural room temperature, improve room insulation around the tank, and if needed add a low-wattage heater with a reliable thermostat to keep temperature stable."
+        },
+        "too_high": {
+          "severity": "warning",
+          "message": "Water temperature is above the target range. Warm water holds less oxygen and increases fish stress.",
+          "quick_fix": "Turn off nearby heat sources, increase surface agitation, and cool the room. You can also float sealed bottles of cool water in the tank, replacing them as they warm up. Avoid sudden temperature drops.",
+          "long_term": "Move the aquarium away from direct sun and radiators, use a fan or ventilation over the surface during hot periods, reduce stocking density, and design the system assuming worst-case summer temperatures."
+        }
+      }
+    },
+    "pH": {
+      "unit": "",
+      "ideal_min": 6.5,
+      "ideal_max": 7.5,
+      "alerts": {
+        "too_low": {
+          "severity": "warning",
+          "message": "pH is below the target range. Strongly acidic water can stress fish and affect biological filtration.",
+          "quick_fix": "Perform a moderate water change (20–30%) with conditioned tap water of normal hardness and pH, and increase surface agitation. Do not use rapid chemical pH boosters.",
+          "long_term": "Increase carbonate hardness (KH) slowly using crushed coral or limestone in the filter or substrate, avoid overstocking and overfeeding that drive acidification, and review soil/substrate choice if pH keeps crashing."
+        },
+        "too_high": {
+          "severity": "warning",
+          "message": "pH is above the target range. Alkaline water increases the toxicity of ammonia and can stress soft-water species.",
+          "quick_fix": "Do a partial water change with conditioned tap water, and avoid any additives that raise KH or pH. Do not attempt to force a large pH drop in one step.",
+          "long_term": "Use softer source water if available, reduce carbonate sources (crushed coral, limestone decor), increase plant mass and organic matter in the substrate (Walstad style), and stock species that tolerate your natural pH."
+        }
+      }
+    },
+    "ammonia": {
+      "unit": "mg/L",
+      "ideal_min": 0,
+      "ideal_max": 0,
+      "alerts": {
+        "too_high": {
+          "severity": "critical",
+          "message": "Ammonia is detectable. Any measurable ammonia is toxic to fish and invertebrates, especially at higher pH.",
+          "quick_fix": "Immediately perform a large but temperature-matched water change (30–50%) with dechlorinated tap water, stop feeding temporarily, and increase aeration or surface agitation. If you have another safe, cycled tank, move the most sensitive fish there.",
+          "long_term": "Increase fast-growing plant mass, reduce stocking and feeding, ensure the filter and substrate stay colonized with bacteria (avoid over-cleaning), and verify that the tank is fully cycled before adding more fish. In a Walstad tank, make sure there is sufficient healthy plant growth to consume nitrogen waste."
+        }
+      }
+    },
+    "nitrite": {
+      "unit": "mg/L",
+      "ideal_min": 0,
+      "ideal_max": 0,
+      "alerts": {
+        "too_high": {
+          "severity": "critical",
+          "message": "Nitrite is detectable. Nitrite interferes with oxygen transport in fish blood and can quickly become life-threatening.",
+          "quick_fix": "Perform an immediate 30–50% water change with dechlorinated water, increase aeration, and stop feeding until nitrite returns to zero. If possible, add a small amount of non-iodized aquarium salt according to manufacturer instructions to help reduce nitrite uptake (do not do this with very salt-sensitive species).",
+          "long_term": "Check that your biofiltration is adequate and not being over-cleaned, lower stocking density, avoid overfeeding, and ensure plants are healthy. In new setups, allow more time for the nitrogen cycle to mature before adding more fish."
+        }
+      }
+    },
+    "nitrate": {
+      "unit": "mg/L",
+      "ideal_min": 2,
+      "ideal_max": 20,
+      "alerts": {
+        "too_low": {
+          "severity": "info",
+          "message": "Nitrate is below the target range. In a Walstad tank, this often means plants are strongly outcompeting bacteria for nitrogen.",
+          "quick_fix": "No emergency action is usually required if fish and plants look healthy. Continue normal maintenance and feeding.",
+          "long_term": "If plant growth stalls or leaves pale, consider slightly increasing fish feeding or adding a gentle nitrogen source fertilizer. Otherwise, accept low nitrate as a normal sign of strong plant uptake in a soil-based low-tech tank."
+        },
+        "too_high": {
+          "severity": "warning",
+          "message": "Nitrate is above the target range. Chronically high nitrate indicates excess waste and can stress fish long term.",
+          "quick_fix": "Perform a 30–50% water change with dechlorinated water to dilute nitrate, remove any decaying plant material or uneaten food, and lightly vacuum accessible debris without disturbing the soil layer.",
+          "long_term": "Reduce stocking or feeding, increase plant biomass (especially fast growers), review your water change schedule, and check that your soil substrate is not overly compacted and anaerobic. Consider spreading feedings into smaller portions."
+        }
+      }
+    },
+    "gh": {
+      "unit": "dGH",
+      "ideal_min": 4,
+      "ideal_max": 10,
+      "alerts": {
+        "too_low": {
+          "severity": "warning",
+          "message": "General hardness (GH) is below the target range. Very soft water can cause mineral deficiencies and molting issues for invertebrates.",
+          "quick_fix": "If livestock shows stress, perform a partial water change with harder tap water (if available) to gently raise GH. Avoid sudden large increases.",
+          "long_term": "Use mineral additives, crushed coral, or remineralizing salts in a controlled way to maintain stable GH, and match your fish and shrimp species to the mineral profile you can maintain consistently."
+        },
+        "too_high": {
+          "severity": "info",
+          "message": "General hardness (GH) is above the target range. Many hardy fish tolerate this, but soft-water species and some plants may struggle.",
+          "quick_fix": "No emergency action is usually required unless you keep very soft-water specialist species. Do not attempt to rapidly soften water with chemicals.",
+          "long_term": "If needed, blend tap water with RO/distilled water for water changes to slowly lower GH over weeks, and select fish and plants that handle your natural hardness well."
+        }
+      }
+    },
+    "kh": {
+      "unit": "dKH",
+      "ideal_min": 3,
+      "ideal_max": 8,
+      "alerts": {
+        "too_low": {
+          "severity": "warning",
+          "message": "Carbonate hardness (KH) is below the target range. Low KH can lead to unstable pH and sudden pH crashes.",
+          "quick_fix": "If pH is also low or unstable, perform a moderate water change with your tap water to restore some buffering. Avoid large swings.",
+          "long_term": "Add a small amount of crushed coral, aragonite, or limestone to the filter or substrate to gradually increase buffering capacity, and avoid very heavy organic loading that drives acidification."
+        },
+        "too_high": {
+          "severity": "info",
+          "message": "Carbonate hardness (KH) is above the target range. High KH stabilizes pH but can limit the natural mild acidity Walstad tanks often have.",
+          "quick_fix": "No immediate emergency in most cases. Do not try to force KH down with strong acids or chemical pH reducers.",
+          "long_term": "If you need softer, more acidic water, gradually mix in RO/distilled water for water changes and avoid calcareous rocks or substrates that continually raise KH."
+        }
+      }
+    },
+    "dissolved_oxygen": {
+      "unit": "mg/L",
+      "ideal_min": 6,
+      "ideal_max": 8,
+      "alerts": {
+        "too_low": {
+          "severity": "critical",
+          "message": "Dissolved oxygen is below the target range. Fish may suffocate if oxygen stays low.",
+          "quick_fix": "Immediately increase surface agitation (raise filter outflow to break the surface or add an airstone), reduce or stop feeding, and if possible lower temperature slightly within a safe range to increase oxygen solubility.",
+          "long_term": "Decrease stocking density, ensure good water circulation, avoid excessive organic buildup in substrate and filter, and review lighting and plant health to prevent large nighttime oxygen drops."
+        },
+        "too_high": {
+          "severity": "info",
+          "message": "Dissolved oxygen is above the typical range. Mild supersaturation is usually harmless, but extreme levels can cause gas bubble issues.",
+          "quick_fix": "Reduce very aggressive aeration or venturi effects if present, and check that no pure oxygen injection or unusual gas source is being used.",
+          "long_term": "Maintain reasonable aeration matched to stocking and avoid setups that deliberately push extreme gas supersaturation."
+        }
+      }
+    },
+    "phosphate": {
+      "unit": "mg/L",
+      "ideal_min": 0.2,
+      "ideal_max": 2.0,
+      "alerts": {
+        "too_low": {
+          "severity": "info",
+          "message": "Phosphate is below the target range. Plants may eventually show deficiency, but this is not an emergency for fish.",
+          "quick_fix": "No urgent action is needed for livestock. Monitor plants for deficiency (darkening, slow growth, green spot algae) and adjust only if symptoms appear.",
+          "long_term": "If plant growth is weak and other nutrients are adequate, consider modest phosphate supplementation or slightly heavier feeding, while watching for algae."
+        },
+        "too_high": {
+          "severity": "warning",
+          "message": "Phosphate is above the target range. High phosphate can promote algae if other conditions allow.",
+          "quick_fix": "Perform a partial water change and remove obvious detritus and uneaten food. Reduce feeding temporarily.",
+          "long_term": "Improve mechanical cleaning of debris, avoid overfeeding, increase plant mass, and avoid unnecessary phosphate-rich fertilizers in a Walstad soil tank."
+        }
+      }
+    },
+    "iron": {
+      "unit": "mg/L",
+      "ideal_min": 0.05,
+      "ideal_max": 0.2,
+      "alerts": {
+        "too_low": {
+          "severity": "info",
+          "message": "Iron is below the target range. This mainly affects plants, not fish.",
+          "quick_fix": "No emergency action is required. Fish and invertebrates are not endangered by low iron.",
+          "long_term": "If new leaves are pale or yellow while nitrates and other nutrients are adequate, consider very gentle iron supplementation, keeping levels low in a soil-based Walstad tank that already has iron in the substrate."
+        },
+        "too_high": {
+          "severity": "warning",
+          "message": "Iron is above the target range. Excess iron can contribute to algae and may indicate over-fertilization.",
+          "quick_fix": "Stop dosing iron or trace fertilizers and perform a partial water change to dilute excess nutrients.",
+          "long_term": "Reduce dosing frequency or quantity, rely more on soil nutrients and fish waste, and only dose water-column iron when clear plant deficiency is observed."
+        }
+      }
+    }
+  },
+  "compositeAlerts": [
+    {
+      "id": "ammonia_with_high_pH",
+      "conditions": {
+        "ammonia_min": 0.2,
+        "pH_min": 7.5
+      },
+      "severity": "critical",
+      "message": "Ammonia is elevated while pH is also high, which greatly increases toxic un-ionized ammonia (NH3). Fish are at serious risk.",
+      "quick_fix": "Immediately perform a large water change (40–50%) with dechlorinated, temperature-matched water, maximize aeration, stop feeding, and if possible temporarily relocate the most sensitive fish to a safe, cycled tank.",
+      "long_term": "Reduce stocking and feeding, verify that the tank is fully cycled, increase fast-growing plant mass, and adjust your maintenance routine so that both ammonia stays at 0 and pH is kept in the mid-range rather than strongly alkaline."
+    },
+    {
+      "id": "nitrite_with_low_oxygen",
+      "conditions": {
+        "nitrite_min": 0.2,
+        "dissolved_oxygen_max": 5.5
+      },
+      "severity": "critical",
+      "message": "Nitrite is elevated and dissolved oxygen is low. Fish cannot transport oxygen efficiently and the water also contains too little oxygen.",
+      "quick_fix": "Immediately increase aeration and surface agitation, carry out a 40–50% water change with dechlorinated water, and stop feeding until nitrite is back to zero and oxygen is normal.",
+      "long_term": "Lower stocking density, strengthen biofiltration and plant growth, avoid overfeeding, and ensure the tank has adequate flow so that filters and plants receive well-oxygenated water."
+    },
+    {
+      "id": "high_nitrate_and_low_oxygen",
+      "conditions": {
+        "nitrate_min": 40,
+        "dissolved_oxygen_max": 6
+      },
+      "severity": "warning",
+      "message": "Nitrate is high and dissolved oxygen is on the low side, suggesting heavy organic loading and possible overstocking.",
+      "quick_fix": "Do a substantial water change (30–50%) with dechlorinated water, increase aeration, and remove visible waste and decaying plant matter.",
+      "long_term": "Reduce stocking or feeding, increase plant mass, improve routine maintenance (especially removal of trapped detritus above the soil cap), and review whether your filtration and circulation are adequate for the bioload."
+    },
+    {
+      "id": "low_kh_and_low_ph",
+      "conditions": {
+        "kh_max": 2,
+        "pH_max": 6.4
+      },
+      "severity": "warning",
+      "message": "Both KH and pH are low, indicating little buffering and a risk of further pH crashes.",
+      "quick_fix": "Perform a moderate water change with your tap water to restore some buffering and stabilize pH. Avoid large swings in one day.",
+      "long_term": "Gradually raise KH with small amounts of crushed coral or similar material, avoid excessive organic overload, and monitor pH regularly in a Walstad soil tank until it proves stable."
+    }
+  ]
+}

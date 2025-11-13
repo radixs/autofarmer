@@ -1,0 +1,101 @@
+Water changes:
+Check the product label for dosage rate: often “X mL treats Y L”.
+For example if 5 mL treats 200 L, then 1 L needs:
+5 mL200 L×1 L=0.025 mL=25µL
+200L
+5mL
+×1L=0.025mL=25µL.
+Because your volume is small, use a dropper and add a small measurable drop (many conditioners say “1 drop per L” for small volumes).
+After adding, mix the water well, wait a minute, then pour into tank.
+
+10–20% water change every 2 weeks, becaue shrimps are very sensitive.
+
+pH
+Unit: pH (dimensionless)
+Target range: 6.5 – 7.5
+Notes:
+Walstad tanks often drift slightly acidic due to soil and biological activity.
+Consistency is more important than the exact number.
+pH may rise during the day (plant photosynthesis) and drop at night—normal.
+
+2. Ammonia (NH₃/NH₄⁺)
+Unit: mg/L
+Target range: 0 mg/L (always)
+Notes:
+Plants are the primary ammonia consumers in Walstad tanks—this is a core concept.
+Any detectable ammonia indicates imbalance, overfeeding, or insufficient plant mass.
+
+3. Nitrite (NO₂⁻)
+Unit: mg/L
+Target range: 0 mg/L
+Notes:
+With a proper soil substrate and heavy planting, nitrite should rarely appear after cycling.
+
+4. Nitrate (NO₃⁻)
+Unit: mg/L
+Best range: 2 – 20 mg/L
+Notes:
+In Walstad tanks, nitrate is often near zero because plants consume it quickly.
+Zero nitrate is NOT automatically bad; it often means “plants outcompete bacteria,” which is normal.
+If fish or shrimp look weak, a small rise (5–10 mg/L) is ideal.
+
+5. General Hardness (GH)
+Unit: °dH (degrees of German hardness)
+Best range: 4 – 10 °dH
+Notes:
+Necessary for fish osmoregulation and shrimp molting.
+Tap water in much of Poland already falls in this range.
+
+6. Carbonate Hardness (KH)
+Unit: °dH
+Best range: 3 – 8 °dH
+Notes:
+Provides pH stability.
+Walstad prefers moderate KH: too high suppresses natural pH swings plants use for CO₂ availability; too low causes pH crashes.
+
+7. CO₂ concentration
+Unit: mg/L
+Natural range (no CO₂ injection): 3 – 10 mg/L
+Notes:
+The tank relies on fish respiration and soil decomposition for CO₂.
+Lower temperature (19–21°C) increases dissolved CO₂ slightly, which is good.
+
+8. Oxygen (O₂)
+Unit: mg/L
+Healthy range: 6 – 8 mg/L at 19–21°C
+Notes:
+Cooler water holds more oxygen—nice advantage for your room-temperature setup.
+Heavy planting + no surface agitation = stable, high O₂ in daytime; slight drops at night are normal.
+
+9. Phosphate (PO₄³⁻)
+Unit: mg/L
+Best range: 0.2 – 2.0 mg/L
+Notes:
+Walstad does not chase phosphate numbers.
+Tap water + fish food usually provide enough.
+
+10. Iron (Fe)
+Unit: mg/L
+Best range: 0.05 – 0.2 mg/L
+Notes:
+Only measure if you suspect chlorosis (yellowing of young leaves).
+Soil substrates already contain plenty of iron—usually not needed.
+
+11. Temperature
+Unit: °C
+Your target: 19 – 21°C
+Notes:
+Perfectly fine for most plants and many shrimp/snails.
+Fish selection must match (white cloud mountain minnows, danios, some rasboras, etc.).
+
+--- Checking frequency:
+pH	Weekly → bi-weekly → monthly
+NH₃ / NH₄⁺	2–3×/week first 2 months → monthly
+NO₂⁻	2×/week early → monthly
+NO₃⁻	Weekly → every 2 weeks → monthly
+GH	Monthly
+KH	Weekly → monthly
+CO₂	Optional monthly
+O₂	Monthly or as needed
+PO₄³⁻	Monthly / as-needed
+Fe	1–2 months / as-needed

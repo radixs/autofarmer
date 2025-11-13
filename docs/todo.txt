@@ -1,0 +1,3 @@
+alerts - add recommendations based on readings.
+
+Dianas book and chemistry books as RAG?

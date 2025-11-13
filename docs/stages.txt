@@ -1,0 +1,180 @@
+-----
+Stage 0 Water only, test baseline – Test your baseline water (no soil, just warmed tap water)
+What you do:
+
+Fill tank with dechlorinated, conditioned tap water
+Let it warm to room temp (19–21°C)
+Run filter & light
+Take measurements
+
+What to expect:
+pH ~ 7.3–7.6 (your water)
+GH ~ 14°dH (your hardness ≈ 250 mg/L CaCO₃)
+KH ~ 6–8°dH
+NO₃⁻ around 1–2
+No ammonia, no nitrite
+
+Measure:
+pH, GH, KH, NO₃⁻
+
+Move to Stage 1 when:
+Water is stable over 2–3 days
+No contaminants from tank/glass/etc.
+Equipment works and parameters don’t drift
+
+-----
+🟢 Stage 1 Add soil, cycle it – Add soil + cap and let the tank “soil-cycle”
+What you do:
+
+Add your soil layer
+Cap with gravel/sand
+Fill slowly
+Run filter, no plants yet
+Lights OFF except for brief checks (soil tanks bloom algae in early days if lights are on)
+
+What you measure:
+pH
+NH₄⁺
+NH₃ (very low ideally)
+NO₂⁻
+KH
+O₂ is optional
+
+Expect soil behavior:
+pH may dip slightly
+KH may drop slowly
+Ammonium NH₄⁺ may rise a little (this is normal)
+Ammonia NH₃ should remain basically 0
+Nitrite should remain 0
+
+-----
+Move to Stage 2 when:
+NO₂⁻ = 0
+NH₃ = 0
+NH₄⁺ is < 1 mg/L (preferably < 0.3 mg/L)
+pH is stable
+No foul smell from substrate
+This usually takes 3–7 days.
+
+-----
+🟢 Stage 2 Add huge mass of plants – Add LOTS of plants (“the jungle stage”)
+
+Plants:
+Anubias nana – Very tough, slow-growing rhizome plant. Good for shaded areas, can attach to wood/rock. 3-5 plants
+Taxiphyllum ‘Spiky’ (Moss) – Moss variety that gives texture and hiding spots for shrimp/snails. ~30-40% of substrate/wood surface
+Limnophila aquatica – Fast-growing stem plant; good for background, helps consume nutrients quickly. 4-6 stems planted in background
+Ceratopteris thalicroides – Another mid-to-background plant, grows larger leaves, useful for structure. 2-3 plants (for visual height & shelter)
+Riccia fluitans – Floating or attached, good for cover/hiding spots especially for shrimp. Small bunch floating or tied onto rock/wood
+~5 plants + moss cover + 4-6 stems + 2-3 background + 1 bunch floating
+
+
+What you do:
+
+Add many fast growers (hornwort, hygrophila, rotala, vallisneria, limnophila, floating plants)
+Keep light at your planned 2000 lux / 8h
+Begin minimal fertilization ONLY IF plants pale (usually not needed in Walstad)
+
+What you measure:
+NO₃⁻ (plants should eat it fast)
+pH
+KH
+NH₄⁺ (should go down)
+NO₂⁻
+Check O₂ just once out of curiosity
+
+What to expect:
+Nitrates (NO₃⁻) drop near zero in 1–2 weeks
+KH may slowly soften over time
+pH may trend 6.7–7.2
+Plants start pearling slightly during midday
+Water becomes visually clearer each day
+
+-----
+Move to Stage 3 when:
+
+Plants have visible new growth
+NO₂⁻ stays 0
+NO₃⁻ stays low but non-zero OR goes to 0 (Walstad normal)
+NH₄⁺ near 0
+pH stable
+No algae bloom, or only mild diatoms
+This takes 2–3 weeks, sometimes longer depending on plant mass.
+
+-----
+🟢 Stage 3 Add 2–3 tiny fish – Add 2–3 tiny fish
+Best choices:
+Ember tetra
+Least rasbora
+Endler male (if you want no babies)
+Small white cloud mountain minnows (prefer 19–21°C)
+Chili rasbora (if not too cool)
+
+Feeding:
+Very tiny amounts.
+Your goal is to create just enough waste to “feed” the ecosystem.
+
+What you measure:
+NH₃
+NH₄⁺
+NO₂⁻
+NO₃⁻
+pH
+KH
+
+What to expect:
+Plants + soil should instantly digest ammonia/ammonium
+Nitrite should stay 0
+Nitrate may rise but stay under ~10
+
+MAX is 6–10 small nano fish total
+
+-----
+Move to Stage 4 when:
+
+All ammonia tests = 0 (NH₃ + NH₄⁺)
+NO₂⁻ = 0
+NO₃⁻ < 20
+
+Plants growing stronger
+Fish behavior normal
+Test through 4 weeks of stability.
+
+🟢 Stage 4 Add snails – Add a snail or two
+Best choices:
+Nerite snail (Neritina family) – Doesn’t over-replicate too fast, eats algae. 1 - 2
+Ramshorn snail (Planorbella spp.) – Good scavenger, reproduces but manageable if feeding is moderate. 1 - 2
+
+What you measure:
+Nitrate
+KH
+pH
+
+Snails introduce minimal bioload.
+They're mostly algae cleanup.
+
+-----
+Move to Stage 5:
+After 1 month stable with fish + snails
+No algae explosion
+Nitrate still < 20
+pH stable
+KH not crashing
+
+-----
+🟢 Stage 5 Add shrimp – Add SHRIMPS (only when the tank is a jungle)
+
+Neocaridina davidi (for example “Red Cherry” variety) – Very popular, hardy, good for beginners. 10 - 15 Need hiding spots!
+
+This is EXACTLY correct, Boss.
+Shrimps require:
+
+✔ Mature biofilm
+✔ Stable pH
+✔ Zero ammonia
+✔ Zero nitrite
+✔ Nitrate ideally < 15
+✔ Stable GH/KH
+✔ Lots of plant cover
+✔ Lots of hiding places
+
+Add them when tank is at least 3 months old, ideally 4–5 months.

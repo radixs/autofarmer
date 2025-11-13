@@ -1,0 +1,131 @@
+Implement the following functionality that will replace the test classes done so far. We want in the frontend to show a manual input form to the left and data visualization on the right. This will serve as a measurements dashboard for real time displaying of what is happening in a low-tech aquarium. Some measurements will come in automatically via Arduino that has sensors hooked up and some will be entered manually.
+
+1. Service class.
+
+Add a MeasurementsService class whose job will be to aggregate measurements for a table and graph view. Also it will act as a middle man for storing new entries into the database - validations and conversions.
+
+In MeasurementsService create getMeasurements method that will return measurements in the required format DTO.
+
+Then create Request DTO class for input data having done simple type validation and cast dates appropiately using Laravel built in functionality. MeasurementsService's getMeasurements method should accept the Request DTO for filtering the measurements (e.g. date range, measurement type). Name Request DTO so that it is clear what it contains and is for. MeasurementsService should perform validations using the validation mechanism (described below) and pass the parameters to the MeasurementRepository. Response from the repository should be converted into a proper Response DTO.
+Apart from date range view under measurementHistory key add also to Response DTO a currentMeasurements key where you will return last measurement of every measurement type, DateTime when it was taken and whether it was added manually of via sensor reading.
+
+Then add a method called storeMeasurement that also accepts a Request DTO that holds easurement name and value. Use validation and pass to MeasurementRepository, on success return 201 Created, otherwise a proper response code. On successful store emit MeasurementStored event that will hold measurement details.
+
+2. Controller and Request DTO. Validators.
+Create MeasurementsController that will have two routes. GET getMeasurements and POST storeMeasurement. Create appropriate paths and configurations.
+Controller should grab a json, convert to DTO using Laravel built in mechanism and pass to the MeasurementsService. For getMeasurements the response DTO needs to be converted into json.
+
+Pick a proper name for all related Request and Response DTO's.
+
+3. Models.
+Add following models and their related tables:
+- measurements
+- hourly_cache
+- daily_cache
+- weekly_cache
+
+4. Repository class.
+Although we will have only one repository MeasurementRepository - it will handle db interactions for all models mentioned above. This class will contain no business logic and will only have any query builders or Eloquent constructs that you deem necessary to complete this task.
+
+5. Measurements.
+Measurement model/db should have these fields:
+name - varchar(20) not null
+unit - varchar(20) not null
+source - varchar(20) not null
+created_at - timestamp UTC not null
+value - decimal (20,5) not null
+
+name will support the following types and units:
+- pH, unit pH
+- NH₃, unit mg/L
+- NH₄⁺, unit mg/L
+- NO₂⁻, unit mg/L
+- NO₃⁻, unit mg/L
+- GH, unit °dH
+- KH, unit °dH
+- CO₂, unit mg/L
+- O₂, unit mg/L
+- PO₄³⁻, unit mg/L
+- Fe, unit mg/L
+- °C, unit °C
+- Lux, unit lux
+
+For characters not supported by mysql use normal ascii equivalent so ₄³⁻ becomes 43-. Create functionality that can change these on the fly when writing/reading to/from repository.
+
+MeasurementsService needs to validate the Request DTO against those names and assign a proper unit and created_on before writing. The request will only have name, source and value.
+
+6. Caching tables.
+Create CachingService and a listener that will listen to MeasurementStored events.
+Create db tables and models: - HourlyCache, DailyCache, WeeklyCache.
+They will look identical, so come up with soem way to keep duplications away.
+Fields:
+- id,
+- range_start_at
+- range_end_at
+- name
+- unit
+- value_avg
+- value_min
+- value_max
+- updated_at
+
+HourlyCache will store ranges that are hourly,
+DailyCache will store ranges that are daily,
+WeeklyCache will store ranges that are weekly
+
+Create a listener that will listen for MeasurementStored event. When picked up call CachingService and it should:
+- upsert the current range measurement. For example when for HourlyCache time crosses 23:59:59 then next entry will create a new row. Otherwise update the current one.
+- when creating a row set value_avg, value_min, value_max to the value in the event. Set range_start_at, range_end_at, name, unit and updated_at.
+- when updating existing row then recalculate value_avg, value_min, value_max. Read measurements table for the range and calculate average, minimum and maximum value. Update updated_at even if nothing got changed.
+
+When done emit the MeasurementCached event.
+Ad a listener for MeasurementCached that will use the websocket to update the frontend. This should also distinguish if that is an update to a range or creation of a new one.
+
+Also add a method to CachingService that can read all 3 tables updated_at and compare with the last created_at in measurements table. Call this method a frontend client first connects and establishes a websocket connection. Perform updates to the 3 tables per every entry in measurements table that is later than the last updated_at in the 3 cache tables.
+
+7. Additional frontend changes:
+Currently the frontend is only meant to work on a Full HD desktop screen, on a desktop copmuter in the browser. So no responsiveness is required at all.
+Therefore extend the viewport to span the whole screen. The sections described below can be arranged using flex or other method.
+
+screen sections:
+A1 | B1
+-------
+A2 | B2
+
+The manual input form and current measurements should thus be 1/4 of the width and to the left edge (left bar - A section). 1/3 of that space at the top should contain current readings (A1 section) from currentMeasurements key in the response, in a stack, apart from usual fields (name, value, unit, source, created_at) add real time counter how long ago was the measurement taken (format 5d 1h 3m 45s).
+Create a json config file with acceptable ranges:
+pH: 6.5 – 7.5
+NH₃: 0 - 0.1
+NH₄⁺: 0 - 0.1
+NO₂⁻: 0 - 0.1
+NO₃⁻: 2 - 20
+GH: 4 - 10
+KH: 3 - 8
+CO₂: 3 - 10
+O₂: 6 - 8
+PO₄³⁻: 0.2 - 2
+Fe: 0.05 - 0.2
+°C: 19 - 21
+If any measurement is below or above the range - make the displayed value red and give it a flashing background.
+If any measurement's created_at is further than a month ago - make the displayed created_at blue and give it a flashing background.
+
+The remaining 2/3 is the manual entry form (A2 section) with manual form items stacked one under the other. The form should write submissions to storeMeasurement without refreshing the page. The form should write as source manual and send only measurement fields that have values filled. If nothing is filled do not send anything (grey out the button, also add all fields empty validation on the backend).
+
+The other 3/4 of the screen to the right will be occupied by visualizations that show history of measurements (B section). This section will be divided into top and bottom by 1/2. Top section (B1) will show a table that will show columns: id, datetime from, datetime to, and for each measurement avg for the row range, max for the row range, min for the row range, source (manual or sensor) Each column should be sortable. Table should display last 20 entries (configurable) and have pagination. There should be a date picker to select from and to at the top of the table. Also create 3 tabs below the date picker - first tab will get hourly readings in the selected range, second daily in the selected range and the last one weekly readings.
+Bottom section (B2) will show a graph capped to the selected table tab. So the graph will display hourly if hourly table is displayed and so forth, same for date range - inherit from the table. The graph will be a line graph for averages with scatter plot showing min and max. Each measurement should have it's own color and be toggleable in a legend below the graph.
+Finally add an export to CSV button next to the table - that should export what the table is showing, so no additional call to the backend should be made.
+
+8. Websockets.
+Change the current solution where Frontent is polling every second for new entries to websocket based. In other words on opening up the frontend should register with backend and the backend will update the frontend whenever MeasurementCached event is emitted. The backend needs to store the selected filter options on the frontend for the session too so the updates sent back have that in mind.
+
+9. Time rules:
+Date time format used everywhere should be 'Y-m-d H:i:s' and UTC on the backend. Frontend should use 'Y-m-d H:i:s' and show time converted using IANA timezone name. So in Poland I will see time UTC+1 (winter time) i UTC+2 (summer time).
+
+10. Descriptions:
+Add dock blocks to classes and their methods that in a plain way describe what they do and what they are for. Keep as short as possible but make it so that an idiot will understand it. Use descriptive class/method/variable names - I prefer longer and more descriptive than too short that make me scratch my head what the thing is for.
+
+11. Test helper:
+Create a Command for seeding and resetting the database (clears db measurements and db cache). For seeding create a proper, realistic data set for an aquarium so the Frontend can be tested. CLI only.
+
+12. Final.
+Remember there is no security.
