@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\TestEntryController;
+use App\Http\Controllers\MeasurementsController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/test-entries', [TestEntryController::class, 'index']);
-Route::post('/test-entries', [TestEntryController::class, 'store']);
+Route::get('/measurements', [MeasurementsController::class, 'index']);
+Route::post('/measurements', [MeasurementsController::class, 'store']);

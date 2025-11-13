@@ -1,9 +1,9 @@
 import './bootstrap';
 import { createApp } from 'vue';
 import store from './store';
-import EntriesBoard from './components/EntriesBoard.vue';
+import MeasurementDashboard from './components/dashboard/MeasurementDashboard.vue';
 
-const app = createApp(EntriesBoard);
+const app = createApp(MeasurementDashboard);
 
 app.use(store);
 app.mount('#app');

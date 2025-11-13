@@ -1,0 +1,15 @@
+[
+  {"slug": "ph", "label": "pH", "asciiLabel": "pH", "unit": "pH", "range": {"min": 6.5, "max": 7.5}},
+  {"slug": "nh3", "label": "NH₃", "asciiLabel": "NH3", "unit": "mg/L", "range": {"min": 0, "max": 0.1}},
+  {"slug": "nh4", "label": "NH₄⁺", "asciiLabel": "NH4+", "unit": "mg/L", "range": {"min": 0, "max": 0.1}},
+  {"slug": "no2", "label": "NO₂⁻", "asciiLabel": "NO2-", "unit": "mg/L", "range": {"min": 0, "max": 0.1}},
+  {"slug": "no3", "label": "NO₃⁻", "asciiLabel": "NO3-", "unit": "mg/L", "range": {"min": 2, "max": 20}},
+  {"slug": "gh", "label": "GH", "asciiLabel": "GH", "unit": "°dH", "range": {"min": 4, "max": 10}},
+  {"slug": "kh", "label": "KH", "asciiLabel": "KH", "unit": "°dH", "range": {"min": 3, "max": 8}},
+  {"slug": "co2", "label": "CO₂", "asciiLabel": "CO2", "unit": "mg/L", "range": {"min": 3, "max": 10}},
+  {"slug": "o2", "label": "O₂", "asciiLabel": "O2", "unit": "mg/L", "range": {"min": 6, "max": 8}},
+  {"slug": "po4", "label": "PO₄³⁻", "asciiLabel": "PO43-", "unit": "mg/L", "range": {"min": 0.2, "max": 2}},
+  {"slug": "fe", "label": "Fe", "asciiLabel": "Fe", "unit": "mg/L", "range": {"min": 0.05, "max": 0.2}},
+  {"slug": "temp", "label": "°C", "asciiLabel": "C", "unit": "°C", "range": {"min": 19, "max": 21}},
+  {"slug": "lux", "label": "Lux", "asciiLabel": "Lux", "unit": "lux", "range": {"min": 0, "max": 5000}}
+]

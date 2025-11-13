@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
+    image: autofarmer-php
     container_name: autofarmer-php
     restart: unless-stopped
     environment:
@@ -44,6 +45,20 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  reverb:
+    image: autofarmer-php
+    container_name: autofarmer-reverb
+    restart: unless-stopped
+    command: php artisan reverb:start --host=0.0.0.0 --port=6001
+    env_file:
+      - .env
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - mysql
+    ports:
+      - "6001:6001"
 
 volumes:
   db_data:
