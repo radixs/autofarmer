@@ -1,12 +1,14 @@
-COMPOSE := docker compose
-PHP     := $(COMPOSE) exec php
+COMPOSE   := docker compose
+PHP       := $(COMPOSE) exec php
 COMPOSER ?= composer
 NPM ?= npm
 DAYS ?= 30
+HOST_UID := $(shell id -u)
+HOST_GID := $(shell id -g)
 
-.PHONY: up down docker-up composer-install npm-install build migrate seed logs shell prepare-storage
+.PHONY: up down docker-up composer-install npm-install build migrate seed logs shell ensure-storage
 
-up: composer-install npm-install build prepare-storage docker-up migrate ## Install deps, build assets, prep dirs, start stack, run migrations
+up: ensure-storage composer-install npm-install build docker-up migrate ## Install deps, build assets, prep dirs, start stack, run migrations
 
 down: ## Stop all containers
 	$(COMPOSE) down
@@ -23,9 +25,10 @@ npm-install: ## Install JS dependencies (resolves peer conflict)
 build: ## Build the production SPA bundle
 	$(NPM) run build
 
-prepare-storage: ## Ensure storage/cache directories exist and are writable inside container
+ensure-storage: ## Ensure storage/bootstrap directories are host-accessible
 	@mkdir -p storage/logs bootstrap/cache
-	$(COMPOSE) run --rm -T php sh -c "chown -R www-data:www-data storage bootstrap/cache && chmod -R 775 storage bootstrap/cache"
+	$(COMPOSE) run --rm -T php sh -c "chown -R $(HOST_UID):$(HOST_GID) storage bootstrap/cache || chown -R www-data:www-data storage bootstrap/cache"
+	chmod -R 777 storage bootstrap/cache
 
 migrate: ## Run database migrations inside the php container
 	$(PHP) php artisan migrate --force

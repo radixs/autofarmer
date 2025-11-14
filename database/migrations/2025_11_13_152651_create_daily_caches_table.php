@@ -25,6 +25,7 @@ return new class extends Migration
 
             $table->unique(['name', 'range_start_at']);
             $table->index('updated_at');
+            $table->index(['range_start_at', 'range_end_at']);
         });
     }
 

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable();
 
             $table->index(['name', 'created_at']);
+            $table->index('created_at');
         });
     }
 
