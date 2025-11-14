@@ -1,6 +1,6 @@
 COMPOSE      := docker compose
 PHP          := $(COMPOSE) exec php
-COMPOSER    ?= composer
+COMPOSER     := $(COMPOSE) run --rm -T php composer
 NPM         ?= npm
 DAYS        ?= 30
 MERGE       ?= true
@@ -78,7 +78,7 @@ shell: ## Open a shell inside a service (usage: make shell SERVICE=php)
 	fi
 	$(COMPOSE) exec $(SERVICE) sh
 
-key-generate: ## Generate the APP_KEY inside a disposable php container
+key-generate: composer-install ## Generate the APP_KEY inside a disposable php container
 	$(COMPOSE) run --rm php php artisan key:generate --force
 
 pi-deploy: ## Pull the specified branch and rebuild/start everything on Raspberry Pi (usage: make pi-deploy [BRANCH=main])

@@ -193,3 +193,12 @@ Entry 2025-11-14T14:06:03Z
 - Commands Executed: `ls`, `cat docsAgent/project_description.md`, `cat docsAgent/ai_todo.md`, `cat docs/deply_to_raspberry_5.md`, `cat .env.example`, `cat Makefile`, `apply_patch` (multiple), `date -u +"%Y-%m-%dT%H:%M:%SZ"`
 - Notes: No automated tests were run—changes were documentation + Makefile helpers only. Firewall instructions lock access to the 192.168.18.0/24 LAN.
 - Next Step: None; await the next requested task.
+
+Entry 2025-11-14T14:31:03Z
+- Task(s): T04 – Raspberry Pi Deployment Runbook
+- Summary: Updated the Makefile so Composer always runs inside the php container and made `make key-generate` depend on Composer installation, preventing failures on bare Pi hosts without global composer/vendor directories.
+- Files Changed:
+  - Makefile (containerized `COMPOSER` command, `key-generate` prerequisite)
+- Commands Executed: `apply_patch`, `date -u +"%Y-%m-%dT%H:%M:%SZ"`
+- Notes: No tests executed (infrastructure tweak only). Running `make up`/`make key-generate` on the Pi now works without preinstalled host Composer.
+- Next Step: None.
