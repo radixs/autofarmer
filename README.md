@@ -1,23 +1,10 @@
-Autofarmer
+Autofarmer 
 ==========
 
-### Requirements
+For detailed project description go to docsAgent/project_description.md
+All files in docsAgent are AI agent maintained.
 
-- Docker & Docker Compose
-- Node 20.x (for local asset builds)
-
-### First run
-
-```bash
-cp .env.example .env
-composer install
-npm install
-php artisan key:generate
-php artisan migrate
-docker compose up -d
-```
-
-The stack exposes:
+### The stack exposes:
 
 - `http://localhost` — nginx + PHP-FPM serving the SPA
 - `ws://localhost:6001` — Laravel Reverb websocket server (started by the `reverb` service)
@@ -32,16 +19,6 @@ php artisan measurements:seed --days=45
 ```
 
 This command truncates the tables, generates believable aquarium metrics (hourly readings for the given range), and refreshes all cache buckets without emitting websocket events.
-
-### Frontend workflow
-
-```bash
-# development with hot reloads
-npm run dev
-
-# production build
-npm run build
-```
 
 ### Websockets
 
