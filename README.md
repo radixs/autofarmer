@@ -3,6 +3,7 @@ Autofarmer
 
 For detailed project description go to docsAgent/project_description.md
 All files in docsAgent are AI agent maintained.
+For deploying into your raspberry PI 5 see docs/deply_to_raspberry_5.md
 
 ### The stack exposes:
 

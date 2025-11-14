@@ -7,8 +7,9 @@ MERGE       ?= true
 HOST_UID    := $(shell id -u)
 HOST_GID    := $(shell id -g)
 SENSOR_STATE := $(word 2,$(MAKECMDGOALS))
+BRANCH     ?= main
 
-.PHONY: up down docker-up composer-install npm-install build migrate seed logs shell ensure-storage resetdb backupdb restoredb sensor on off
+.PHONY: up down docker-up composer-install npm-install build migrate seed logs shell ensure-storage resetdb backupdb restoredb sensor on off pi-deploy key-generate
 
 up: ensure-storage composer-install npm-install build docker-up migrate ## Install deps, build assets, prep dirs, start stack, run migrations
 
@@ -76,3 +77,12 @@ shell: ## Open a shell inside a service (usage: make shell SERVICE=php)
 		exit 1; \
 	fi
 	$(COMPOSE) exec $(SERVICE) sh
+
+key-generate: ## Generate the APP_KEY inside a disposable php container
+	$(COMPOSE) run --rm php php artisan key:generate --force
+
+pi-deploy: ## Pull the specified branch and rebuild/start everything on Raspberry Pi (usage: make pi-deploy [BRANCH=main])
+	git fetch origin
+	git checkout $(BRANCH)
+	git pull --ff-only origin $(BRANCH)
+	$(MAKE) up

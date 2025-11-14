@@ -27,3 +27,11 @@ T03 – Measurement Backups & Sensor Toggle
 - Tests: `php artisan test` covering new console commands + API sensor gating.
 - Acceptance: Operators can run the new commands end-to-end, sensor mode survives restarts, and test coverage guards the flows.
 - Status: Completed
+
+T04 – Raspberry Pi Deployment Runbook
+- Objective: Document and automate the steps required to deploy Autofarmer onto the Raspberry Pi 5 on the 192.168.18.0/24 LAN.
+- Scope: Update `docs/deply_to_raspberry_5.md` with prerequisites, firewall/LAN configuration, image build + container boot steps, Arduino POST guidance, and describe new Makefile helpers.
+- Deliverables: Expanded deployment guide plus new Make targets (`pi-deploy`, `key-generate`) wired into the repo.
+- Tests: Manual verification via `make up` and `make pi-deploy` walkthrough instructions; curl check for `/api/measurements`.
+- Acceptance: Operators can follow the document to fetch/build/run the stack on the Pi with LAN-only exposure and minimal commands.
+- Status: Completed

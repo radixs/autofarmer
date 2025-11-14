@@ -182,3 +182,14 @@ Entry 2025-11-14T13:58:00Z
 - Commands Executed: `apply_patch`, `date`
 - Notes: SVG keeps transparent background per request; browsers now use the new icon automatically without rebuilding assets.
 - Next Step: None.
+
+Entry 2025-11-14T14:06:03Z
+- Task(s): T04 – Raspberry Pi Deployment Runbook
+- Summary: Added `pi-deploy` and `key-generate` Makefile helpers, then rewrote `docs/deply_to_raspberry_5.md` into a full deployment playbook covering prerequisites, firewall/LAN locking, `.env` config, build/start/verify steps, Arduino POST guidance, and the one-command redeploy flow.
+- Files Changed:
+  - Makefile (new BRANCH var, `pi-deploy`, `key-generate`)
+  - docs/deply_to_raspberry_5.md (complete guide)
+  - docsAgent/ai_todo.md (added T04 entry marked completed)
+- Commands Executed: `ls`, `cat docsAgent/project_description.md`, `cat docsAgent/ai_todo.md`, `cat docs/deply_to_raspberry_5.md`, `cat .env.example`, `cat Makefile`, `apply_patch` (multiple), `date -u +"%Y-%m-%dT%H:%M:%SZ"`
+- Notes: No automated tests were run—changes were documentation + Makefile helpers only. Firewall instructions lock access to the 192.168.18.0/24 LAN.
+- Next Step: None; await the next requested task.
