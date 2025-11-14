@@ -1,7 +1,7 @@
 COMPOSE      := docker compose
 PHP          := $(COMPOSE) exec php
 COMPOSER     := $(COMPOSE) run --rm -T php composer
-NPM         ?= npm
+NPM         ?= $(COMPOSE) run --rm -T php npm
 DAYS        ?= 30
 MERGE       ?= true
 HOST_UID    := $(shell id -u)
@@ -22,7 +22,7 @@ docker-up: ## Start containers in detached mode (builds images when needed)
 composer-install: ## Install PHP dependencies
 	$(COMPOSER) install
 
-npm-install: ## Install JS dependencies (resolves peer conflict)
+npm-install: ## Install JS dependencies inside the php container (resolves peer conflict)
 	$(NPM) install --legacy-peer-deps
 
 build: ## Build the production SPA bundle
@@ -40,7 +40,7 @@ test: ## Run the backend PHPUnit suite inside the php container (usage: make tes
 	$(PHP) php artisan test $(ARGS)
 
 testf:
-	npm run test:unit
+	$(NPM) run test:unit
 
 seed: ## Seed realistic aquarium data (usage: make seed DAYS=45)
 	$(PHP) php artisan measurements:seed --days=$(DAYS)

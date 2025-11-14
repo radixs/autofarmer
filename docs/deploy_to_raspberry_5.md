@@ -16,6 +16,7 @@ sudo apt install -y make git ufw
 ```
 
 Docker installation instructions are skipped here because the machine already has it, but [Docker's official docs](https://docs.docker.com/engine/install/raspberry-pi-os/) cover the process if you need to re-install.
+Node/npm are executed from inside the php Docker image (the Makefile wraps `docker compose run --rm -T php npm ...`), so you do **not** need a host Node installation for `make up`. Install nvm/node locally only if you plan to run `npm run dev` directly on the Pi outside of Docker.
 
 ## Makefile commands used on the Pi
 

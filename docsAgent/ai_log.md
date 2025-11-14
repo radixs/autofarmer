@@ -202,3 +202,22 @@ Entry 2025-11-14T14:31:03Z
 - Commands Executed: `apply_patch`, `date -u +"%Y-%m-%dT%H:%M:%SZ"`
 - Notes: No tests executed (infrastructure tweak only). Running `make up`/`make key-generate` on the Pi now works without preinstalled host Composer.
 - Next Step: None.
+
+Entry 2025-11-14T14:35:48Z
+- Task(s): T04 – Raspberry Pi Deployment Runbook
+- Summary: Added an NVM/Node installation subsection to `docs/deploy_to_raspberry_5.md` so Pi operators install Node 20 and npm before running `make up`, avoiding `npm` missing errors.
+- Files Changed:
+  - docs/deploy_to_raspberry_5.md (new instructions for installing nvm and Node 20 LTS)
+- Commands Executed: `apply_patch`, `date -u +"%Y-%m-%dT%H:%M:%SZ"`
+- Notes: Documentation-only update; no automated tests executed.
+- Next Step: None.
+
+Entry 2025-11-14T14:37:55Z
+- Task(s): T04 – Raspberry Pi Deployment Runbook
+- Summary: Routed all Makefile npm commands through the php container (no host Node required) and updated the Pi deployment guide to note that npm now runs inside Docker rather than via NVM.
+- Files Changed:
+  - Makefile (default `NPM` command uses `docker compose run --rm -T php npm`, `npm-install`/`build`/`testf` targets updated)
+  - docs/deploy_to_raspberry_5.md (removed nvm instructions, clarified containerized npm usage)
+- Commands Executed: `apply_patch`, `date -u +"%Y-%m-%dT%H:%M:%SZ"`
+- Notes: No automated tests executed; changes affect tooling/docs only.
+- Next Step: None.
