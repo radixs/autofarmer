@@ -173,3 +173,12 @@ Entry 2025-11-14T13:49:59Z
 - Commands Executed: `apply_patch` (multiple files), `npm run test:unit` (fails: vitest worker exit in sandbox), `npx vitest run ...` (same failure), `make test` (passes after cleanup)
 - Notes: Vitest still fails in this sandbox with the known “Worker exited unexpectedly” error; run `npm run test:unit` on a host Node environment to verify the updated specs.
 - Next Step: None.
+
+Entry 2025-11-14T13:58:00Z
+- Summary: Created a minimalist SVG favicon (blue/green gradient leaf motif) and wired it into the SPA layout so browsers display it via `<link rel="icon">`.
+- Files Changed:
+  - public/favicon.svg (new artwork)
+  - resources/views/spa.blade.php (favicon link)
+- Commands Executed: `apply_patch`, `date`
+- Notes: SVG keeps transparent background per request; browsers now use the new icon automatically without rebuilding assets.
+- Next Step: None.
