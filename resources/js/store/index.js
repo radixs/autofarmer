@@ -51,6 +51,8 @@ export const createMeasurementStore = () => createStore({
         measurementMap,
         channelName: null,
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
+        sensorEnabled: false,
+        sensorModeLoading: false,
     }),
     mutations: {
         setFilters(state, payload) {
@@ -75,10 +77,19 @@ export const createMeasurementStore = () => createStore({
         resetFilters(state) {
             state.filters = defaultFilters();
         },
+        setSensorEnabled(state, enabled) {
+            state.sensorEnabled = enabled;
+        },
+        setSensorModeLoading(state, loading) {
+            state.sensorModeLoading = loading;
+        },
     },
     actions: {
         async init({ dispatch }) {
-            await dispatch('fetchMeasurements');
+            await Promise.all([
+                dispatch('fetchMeasurements'),
+                dispatch('fetchSensorMode'),
+            ]);
         },
         async fetchMeasurements({ state, commit, dispatch }, overrides = {}) {
             const filters = { ...state.filters, ...overrides };
@@ -166,6 +177,34 @@ export const createMeasurementStore = () => createStore({
         },
         updateNames({ dispatch }, names) {
             dispatch('fetchMeasurements', { names, page: 1 });
+        },
+        async fetchSensorMode({ commit }) {
+            commit('setSensorModeLoading', true);
+
+            try {
+                const { data } = await axios.get('/api/sensor-mode');
+                commit('setSensorEnabled', Boolean(data.data?.enabled));
+                commit('setError', null);
+            } catch (error) {
+                commit('setError', error.response?.data?.message ?? 'Unable to load sensor mode.');
+                throw error;
+            } finally {
+                commit('setSensorModeLoading', false);
+            }
+        },
+        async updateSensorMode({ commit }, enabled) {
+            commit('setSensorModeLoading', true);
+
+            try {
+                const { data } = await axios.put('/api/sensor-mode', { enabled });
+                commit('setSensorEnabled', Boolean(data.data?.enabled));
+                commit('setError', null);
+            } catch (error) {
+                commit('setError', error.response?.data?.message ?? 'Unable to update sensor mode.');
+                throw error;
+            } finally {
+                commit('setSensorModeLoading', false);
+            }
         },
     },
 });

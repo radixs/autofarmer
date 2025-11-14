@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Support\SensorMode;
+use App\Services\SensorModeService;
 use Illuminate\Console\Command;
 
 class SensorModeCommand extends Command
@@ -11,7 +11,7 @@ class SensorModeCommand extends Command
 
     protected $description = 'Toggle whether sensor sourced payloads are processed.';
 
-    public function __construct(private readonly SensorMode $sensorMode)
+    public function __construct(private readonly SensorModeService $service)
     {
         parent::__construct();
     }
@@ -27,9 +27,9 @@ class SensorModeCommand extends Command
         }
 
         $enabled = $state === 'on';
-        $this->sensorMode->setEnabled($enabled);
+        $payload = $this->service->setState($enabled);
 
-        $this->info('Sensor ingestion is now '.($enabled ? 'ON' : 'OFF').'.');
+        $this->info('Sensor ingestion is now '.strtoupper($payload['state']).'.');
 
         return Command::SUCCESS;
     }

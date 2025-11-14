@@ -15,6 +15,7 @@ describe('Measurements Vuex store', () => {
         window.Echo = buildEchoMock();
         axios.get.mockReset();
         axios.post.mockReset();
+        axios.put?.mockReset?.();
     });
 
     it('fetches measurements and updates subscription payloads', async () => {
@@ -56,5 +57,25 @@ describe('Measurements Vuex store', () => {
     it('throws when attempting to submit without any filled entries', async () => {
         const store = createMeasurementStore();
         await expect(store.dispatch('submitManualMeasurements', { entries: [] })).rejects.toThrow('Please provide at least one measurement value.');
+    });
+
+    it('fetches the current sensor mode state', async () => {
+        const store = createMeasurementStore();
+        axios.get.mockResolvedValue({ data: { data: { enabled: true } } });
+
+        await store.dispatch('fetchSensorMode');
+
+        expect(store.state.sensorEnabled).toBe(true);
+        expect(axios.get).toHaveBeenCalledWith('/api/sensor-mode');
+    });
+
+    it('updates sensor mode state via the API', async () => {
+        const store = createMeasurementStore();
+        axios.put.mockResolvedValue({ data: { data: { enabled: false } } });
+
+        await store.dispatch('updateSensorMode', false);
+
+        expect(axios.put).toHaveBeenCalledWith('/api/sensor-mode', { enabled: false });
+        expect(store.state.sensorEnabled).toBe(false);
     });
 });

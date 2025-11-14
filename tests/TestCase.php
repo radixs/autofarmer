@@ -12,10 +12,15 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        $sensorState = storage_path('app/testing/sensor_mode.json');
+        $paths = [
+            storage_path('app/testing/sensor_mode.json'),
+            storage_path('app/sensor_mode.json'),
+        ];
 
-        if (file_exists($sensorState)) {
-            unlink($sensorState);
+        foreach ($paths as $sensorState) {
+            if (file_exists($sensorState)) {
+                unlink($sensorState);
+            }
         }
     }
 }

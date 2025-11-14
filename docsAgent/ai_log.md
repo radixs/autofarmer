@@ -160,3 +160,16 @@ Entry 2025-11-14T13:37:45Z
 - Commands Executed: `apply_patch`, `date`
 - Notes: `make sensor on|off` works by passing multiple targets (the helper inspects `MAKECMDGOALS`), so aliases like `make sensor off` no longer require manual ENV vars.
 - Next Step: None.
+
+Entry 2025-11-14T13:49:59Z
+- Task(s): T03 – Measurement Backups & Sensor Toggle
+- Summary: Added a RESTful sensor-mode service/controller so both the CLI and new dashboard toggle can query/update state, exposed GET/PUT `/api/sensor-mode`, wired Vuex + MeasurementDashboard UI to fetch + mutate the state beside the timezone label, and extended backend/Vitest coverage.
+- Files Changed:
+  - app/Services/SensorModeService.php, app/Http/Controllers/SensorModeController.php, app/Http/Requests/SensorModeUpdateRequest.php, routes/api.php (API surface + shared business logic)
+  - app/Console/Commands/SensorModeCommand.php (delegate to the service)
+  - resources/js/components/dashboard/MeasurementDashboard.vue, resources/js/store/index.js (UI toggle + Vuex state/actions)
+  - resources/js/tests/**, tests/Api/SensorModeControllerTest.php, tests/TestCase.php (new specs + harness cleanup)
+  - README.md (documented dashboard toggle + API endpoint)
+- Commands Executed: `apply_patch` (multiple files), `npm run test:unit` (fails: vitest worker exit in sandbox), `npx vitest run ...` (same failure), `make test` (passes after cleanup)
+- Notes: Vitest still fails in this sandbox with the known “Worker exited unexpectedly” error; run `npm run test:unit` on a host Node environment to verify the updated specs.
+- Next Step: None.

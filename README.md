@@ -107,7 +107,7 @@ php artisan sensor:set on    # resume normal operations
 ```
 
 When the receiver is OFF the API still responds with HTTP 201 but includes a `notice` field so you can confirm that the payload was intentionally ignored. The setting lives under `storage/app/sensor_mode.json`, so it survives container rebuilds.
-Sensor ingestion ships DISABLED by default—explicitly run `php artisan sensor:set on` after provisioning (or any time you want to re-enable automated feeds).
+Sensor ingestion ships DISABLED by default—explicitly run `php artisan sensor:set on` (or use the dashboard toggle in the top-right corner) after provisioning whenever you want automated feeds to resume. A REST endpoint (`GET/PUT /api/sensor-mode`) powers the UI toggle so you can script remote changes if needed.
 
 ### Reverb & Redis
 

@@ -6,7 +6,35 @@
                     <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Autofarmer</p>
                     <h1 class="text-3xl font-semibold text-white">Aquarium telemetry console</h1>
                 </div>
-                <p class="text-sm text-slate-400">Local timezone: {{ timezone }}</p>
+                <div class="flex items-center gap-4">
+                    <p class="text-sm text-slate-400 text-right">
+                        Local timezone: {{ timezone }}
+                    </p>
+                    <button
+                        class="sensor-toggle inline-flex items-center gap-3 rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-slate-200 transition hover:border-slate-500 disabled:opacity-60"
+                        :class="sensorEnabled ? 'shadow-[0_0_15px_rgba(74,222,128,0.25)]' : 'shadow-none'"
+                        type="button"
+                        :aria-pressed="sensorEnabled"
+                        :disabled="sensorModeLoading"
+                        @click="handleSensorToggle"
+                    >
+                        <span class="flex flex-col text-left leading-tight">
+                            <span class="text-[10px] text-slate-400">Sensors</span>
+                            <span :class="sensorEnabled ? 'text-emerald-300' : 'text-slate-400'">
+                                {{ sensorEnabled ? 'On' : 'Off' }}
+                            </span>
+                        </span>
+                        <span
+                            class="relative inline-flex h-6 w-12 items-center rounded-full bg-slate-800 p-1 transition"
+                            :class="sensorEnabled ? 'bg-emerald-400/30' : ''"
+                        >
+                            <span
+                                class="inline-block h-4 w-4 rounded-full bg-slate-400 transition-all"
+                                :class="sensorEnabled ? 'translate-x-6 bg-emerald-300' : 'translate-x-0'"
+                            />
+                        </span>
+                    </button>
+                </div>
             </header>
 
             <div class="flex flex-1 gap-6 overflow-hidden">
@@ -70,6 +98,8 @@ const definitions = computed(() => store.state.measurementDefinitions);
 const timezone = computed(() => store.state.timezone);
 const loading = computed(() => store.state.loading);
 const error = computed(() => store.state.error);
+const sensorEnabled = computed(() => store.state.sensorEnabled);
+const sensorModeLoading = computed(() => store.state.sensorModeLoading);
 
 const formSubmitting = ref(false);
 const formFeedback = ref('');
@@ -153,5 +183,13 @@ const handleExport = () => {
     link.download = `measurements-${filters.value.interval}.csv`;
     link.click();
     window.URL.revokeObjectURL(url);
+};
+
+const handleSensorToggle = async () => {
+    try {
+        await store.dispatch('updateSensorMode', ! sensorEnabled.value);
+    } catch (e) {
+        // Error message is handled via the shared error banner.
+    }
 };
 </script>

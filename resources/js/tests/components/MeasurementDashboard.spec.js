@@ -42,9 +42,15 @@ const stubStore = {
         timezone: 'UTC',
         loading: false,
         error: '',
+        sensorEnabled: false,
+        sensorModeLoading: false,
     },
-    dispatch: vi.fn((action) => {
+    dispatch: vi.fn((action, payload) => {
         if (action === 'submitManualMeasurements') {
+            return Promise.resolve();
+        }
+        if (action === 'updateSensorMode') {
+            stubStore.state.sensorEnabled = payload;
             return Promise.resolve();
         }
 
@@ -58,6 +64,7 @@ vi.mock('vuex', () => ({
 
 describe('MeasurementDashboard', () => {
     it('dispatches initialization, manual submissions, exports, and interval changes', async () => {
+        stubStore.dispatch.mockClear();
         const wrapper = mount(MeasurementDashboard, {
             global: {
                 stubs: {
@@ -79,5 +86,8 @@ describe('MeasurementDashboard', () => {
 
         await wrapper.find('.history-table-stub .emit-export').trigger('click');
         expect(URL.createObjectURL).toHaveBeenCalled();
+
+        await wrapper.find('.sensor-toggle').trigger('click');
+        expect(stubStore.dispatch).toHaveBeenCalledWith('updateSensorMode', true);
     });
 });
