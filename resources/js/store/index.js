@@ -35,7 +35,7 @@ const measurementMap = measurements.reduce((carry, item) => {
     return carry;
 }, {});
 
-export default createStore({
+export const createMeasurementStore = () => createStore({
     state: () => ({
         filters: defaultFilters(),
         subscriptionId: null,
@@ -169,3 +169,5 @@ export default createStore({
         },
     },
 });
+
+export default createMeasurementStore();

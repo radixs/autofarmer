@@ -12,4 +12,16 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+    test: {
+        globals: true,
+        environment: 'jsdom',
+        setupFiles: 'resources/js/tests/setup.js',
+        css: true,
+        pool: 'forks',
+        poolOptions: {
+            forks: {
+                singleFork: true,
+            },
+        },
+    },
 });

@@ -36,6 +36,18 @@ make test ARGS=tests/Feature/Auth
 
 Both options can be combined if desired. This wraps `php artisan test` ensuring the sqlite driver inside the container is used. If you prefer to run the suite on the host directly, make sure your PHP install has the `pdo_sqlite` extension enabled (Composer now enforces this via `ext-pdo_sqlite`).
 
+### Frontend unit tests
+
+Vitest + Vue Test Utils cover the dashboard components and store logic:
+
+```bash
+npm run test:unit
+npm run test:unit:watch
+```
+
+These commands run on the host (Node 18+) and rely on deterministic fixtures, so no backend containers are required.
+Run `npm install` after pulling the latest code so Vitest and Vue Test Utils are available locally.
+
 ### Websockets
 
 The UI subscribes to `private-measurements.{subscriptionId}` channels through Laravel Reverb. If you prefer to run processes manually instead of the dockerized `reverb` service:

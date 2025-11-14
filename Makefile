@@ -36,6 +36,9 @@ migrate: ## Run database migrations inside the php container
 test: ## Run the backend PHPUnit suite inside the php container (usage: make test [TEST_TARGET=tests/Feature/Auth] [TEST_FILTER="UserTest::method"])
 	$(PHP) php artisan test $(ARGS)
 
+testf:
+	npm run test:unit
+
 seed: ## Seed realistic aquarium data (usage: make seed DAYS=45)
 	$(PHP) php artisan measurements:seed --days=$(DAYS)
 
