@@ -20,6 +20,22 @@ php artisan measurements:seed --days=45
 
 This command truncates the tables, generates believable aquarium metrics (hourly readings for the given range), and refreshes all cache buckets without emitting websocket events.
 
+### Running backend tests
+
+Execute the PHPUnit suite inside the php container via the Makefile helper:
+
+```bash
+make test
+```
+
+Optional variables let you narrow the run without typing the full artisan command:
+
+```bash
+make test ARGS=tests/Feature/Auth
+```
+
+Both options can be combined if desired. This wraps `php artisan test` ensuring the sqlite driver inside the container is used. If you prefer to run the suite on the host directly, make sure your PHP install has the `pdo_sqlite` extension enabled (Composer now enforces this via `ext-pdo_sqlite`).
+
 ### Websockets
 
 The UI subscribes to `private-measurements.{subscriptionId}` channels through Laravel Reverb. If you prefer to run processes manually instead of the dockerized `reverb` service:

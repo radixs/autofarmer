@@ -1,6 +1,7 @@
 # Agent Instructions for Autofarmer
 
 ## Scope & Safety
+- You must be able to run `docker compose` so `/var/run/docker.sock` must be exposed and available. You should be able to run all commands, inclusing makefile for containers in the current project.
 - Operate strictly within this repository. Never modify parent directories or host-level config.
 - Do not install global packages on the host. All tooling runs via Docker/Makefile.
 - Source of truth for specs: `docsAgent/project_description.md`. Always reconcile requests with that file.
@@ -34,6 +35,8 @@
 - Every functional addition requires corresponding automated tests or documented manual verification when automation is infeasible.
 - Do not leave failing tests; if a legacy test is obsolete, disable with reason and link to log entry.
 - Always re-run existing suites relevant to touched areas (e.g., backend `php artisan test`, frontend build) to avoid regressions.
+- tests should be ran with `make test`, optionally `make test ARGS=`
+- never use random generation in tests - all tests MUST always consistently execute same data. Make fixtures that cover all cases instead.
 
 ## Documentation Duties
 - Update `README.md` whenever setup steps, env vars, or workflows change.
