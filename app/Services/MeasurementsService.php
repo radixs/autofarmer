@@ -14,6 +14,7 @@ use App\Repositories\MeasurementRepository;
 use App\Services\CachingService;
 use App\Support\MeasurementDictionary;
 use App\Support\MeasurementSubscriptionStore;
+use App\Support\SensorMode;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
@@ -24,6 +25,7 @@ class MeasurementsService
         private readonly MeasurementRepository $repository,
         private readonly MeasurementSubscriptionStore $subscriptionStore,
         private readonly CachingService $cachingService,
+        private readonly SensorMode $sensorMode,
     ) {
     }
 
@@ -68,8 +70,12 @@ class MeasurementsService
         );
     }
 
-    public function storeMeasurement(array $payload): Measurement
+    public function storeMeasurement(array $payload): ?Measurement
     {
+        if ($payload['source'] === 'sensor' && ! $this->sensorMode->isEnabled()) {
+            return null;
+        }
+
         $slug = MeasurementDictionary::normalizeName($payload['name']);
 
         if (! $slug) {

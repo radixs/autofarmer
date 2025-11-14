@@ -19,3 +19,11 @@ T02 – Comprehensive Backend Test Suite
 - Tests: `php artisan test` (full suite) executing the new coverage locally and in CI.
 - Acceptance: Tests document intent, pass consistently, and fail when core flows regress; no reliance on manual verification.
 - Status: Completed (tests added)
+
+T03 – Measurement Backups & Sensor Toggle
+- Objective: Provide artisan tooling to reset, backup, restore, and gate incoming sensor data so on-site operators can recover quickly from corrupted readings.
+- Scope: New console commands for truncate-only reset, deterministic SQL backups, merge-aware restores, and a persisted sensor mode switch that integrates with the ingestion service.
+- Deliverables: Artisan commands, persistent mode storage helper, API handling updates, documentation, and regression tests validating backup/restore flows plus the sensor toggle behavior.
+- Tests: `php artisan test` covering new console commands + API sensor gating.
+- Acceptance: Operators can run the new commands end-to-end, sensor mode survives restarts, and test coverage guards the flows.
+- Status: Completed

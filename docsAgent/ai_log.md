@@ -126,3 +126,37 @@ Entry 2025-11-14T12:28:14Z
 - Commands Executed: `apply_patch`, `rm -rf coverage`, `date`
 - Notes: Coverage can still be collected manually via `vitest run --coverage` if needed, but default npm scripts now skip it and the repo won’t track the folder.
 - Next Step: None.
+
+Entry 2025-11-14T13:23:16Z
+- Task(s): T03 – Measurement Backups & Sensor Toggle
+- Summary: Added persistent sensor-mode storage plus a new `sensor:set` command that silently drops sensor payloads while allowing manual posts, created truncate/backup/restore artisan helpers (SQL dump writer + merge-aware importer), and updated the measurement API, README, and task list accordingly.
+- Files Changed:
+  - app/Support/SensorMode.php, TelemetryTables.php (new helpers for persisted mode + shared table list)
+  - app/Services/MeasurementsService.php, app/Http/Controllers/MeasurementsController.php (sensor gating + 201 notice response)
+  - app/Console/Commands/{ResetTelemetryCommand,BackupTelemetryCommand,RestoreTelemetryCommand,SensorModeCommand}.php (new CLI tools)
+  - tests/Feature/Console/TelemetryCommandTest.php, tests/Api/MeasurementsTest.php, tests/TestCase.php (backup/restore/sensor coverage + sensor file cleanup)
+  - README.md, .gitignore, docsAgent/ai_todo.md (docs + ignored storage artifacts)
+- Commands Executed: `ls`, `sed -n ...`, `apply_patch` (multiple files), `date -u ...`, `make test` (fails: docker socket perms), `make test` (rerun with elevated docker access)
+- Notes: `make test` required elevated docker permissions; rerun succeeded and validates the new command + API behaviors end-to-end.
+- Next Step: T03 – Monitor operator feedback on the new backup/restore workflow and extend tooling if additional datasets need protection.
+
+Entry 2025-11-14T13:29:12Z
+- Task(s): T03 – Measurement Backups & Sensor Toggle
+- Summary: Updated the SensorMode helper so missing state files default to OFF, refreshed console/API tests to cover the new default, and documented that admins must explicitly enable sensor ingestion on first boot.
+- Files Changed:
+  - app/Support/SensorMode.php (default state false, constant)
+  - tests/Feature/Console/TelemetryCommandTest.php, tests/Api/MeasurementsTest.php (assert default OFF + new coverage)
+  - README.md (call out default-off behavior)
+- Commands Executed: `apply_patch` (several), `date`, `make test` (see below)
+- Notes: Sensor-mode state file already cleared per test harness so suites read the default; ensure operators run `sensor:set on` before trusting sensor payloads.
+- Next Step: None.
+
+Entry 2025-11-14T13:37:45Z
+- Task(s): T03 – Measurement Backups & Sensor Toggle
+- Summary: Added Makefile shortcuts for the reset/backup/restore/sensor artisan commands so operators can run `make resetdb`, `make backupdb`, `make restoredb FILE=...`, and `make sensor on|off`; documented the wrappers in README.
+- Files Changed:
+  - Makefile (new phony targets + sensor goal parsing)
+  - README.md (usage instructions for the shortcuts)
+- Commands Executed: `apply_patch`, `date`
+- Notes: `make sensor on|off` works by passing multiple targets (the helper inspects `MAKECMDGOALS`), so aliases like `make sensor off` no longer require manual ENV vars.
+- Next Step: None.

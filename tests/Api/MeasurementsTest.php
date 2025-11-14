@@ -6,6 +6,7 @@ use App\Events\MeasurementStored;
 use App\Models\Cache\HourlyMeasurementCache;
 use App\Models\Measurement;
 use Carbon\CarbonImmutable;
+use App\Support\SensorMode;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -97,5 +98,30 @@ class MeasurementsTest extends TestCase
             return $event->measurement->name === 'ph'
                 && $event->measurement->unit === 'pH';
         });
+    }
+
+    public function test_sensor_mode_off_silently_skips_sensor_payloads(): void
+    {
+        $this->assertFalse(app(SensorMode::class)->isEnabled());
+
+        $sensorResponse = $this->postJson('/api/measurements', [
+            'name' => 'pH',
+            'value' => 7.33,
+            'source' => 'sensor',
+        ]);
+
+        $sensorResponse->assertCreated();
+        $sensorResponse->assertJsonPath('notice', 'Receiver in off mode. Sensor payload skipped.');
+        $this->assertDatabaseCount('measurements', 0);
+
+        $manualResponse = $this->postJson('/api/measurements', [
+            'name' => 'pH',
+            'value' => 7.21,
+            'source' => 'manual',
+        ]);
+
+        $manualResponse->assertCreated();
+        $manualResponse->assertJsonPath('data.source', 'manual');
+        $this->assertDatabaseCount('measurements', 1);
     }
 }

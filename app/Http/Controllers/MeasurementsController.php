@@ -24,6 +24,12 @@ class MeasurementsController extends Controller
     {
         $measurement = $this->service->storeMeasurement($request->payload());
 
+        if (! $measurement) {
+            return response()->json([
+                'notice' => 'Receiver in off mode. Sensor payload skipped.',
+            ], 201);
+        }
+
         return response()->json([
             'data' => $measurement->only(['id', 'name', 'unit', 'source', 'value', 'created_at']),
         ], 201);

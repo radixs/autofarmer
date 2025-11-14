@@ -18,6 +18,9 @@
 /public/storage
 /storage/*.key
 /storage/pail
+/storage/db_backups
+/storage/app/sensor_mode.json
+/storage/app/testing/sensor_mode.json
 /vendor
 coverage/
 Homestead.json

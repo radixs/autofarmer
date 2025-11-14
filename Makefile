@@ -1,12 +1,14 @@
-COMPOSE   := docker compose
-PHP       := $(COMPOSE) exec php
-COMPOSER ?= composer
-NPM ?= npm
-DAYS ?= 30
-HOST_UID := $(shell id -u)
-HOST_GID := $(shell id -g)
+COMPOSE      := docker compose
+PHP          := $(COMPOSE) exec php
+COMPOSER    ?= composer
+NPM         ?= npm
+DAYS        ?= 30
+MERGE       ?= true
+HOST_UID    := $(shell id -u)
+HOST_GID    := $(shell id -g)
+SENSOR_STATE := $(word 2,$(MAKECMDGOALS))
 
-.PHONY: up down docker-up composer-install npm-install build migrate seed logs shell ensure-storage
+.PHONY: up down docker-up composer-install npm-install build migrate seed logs shell ensure-storage resetdb backupdb restoredb sensor on off
 
 up: ensure-storage composer-install npm-install build docker-up migrate ## Install deps, build assets, prep dirs, start stack, run migrations
 
@@ -41,6 +43,29 @@ testf:
 
 seed: ## Seed realistic aquarium data (usage: make seed DAYS=45)
 	$(PHP) php artisan measurements:seed --days=$(DAYS)
+
+resetdb: ## Truncate measurement + cache tables without reseeding
+	$(PHP) php artisan measurements:reset
+
+backupdb: ## Dump measurements + caches into storage/db_backups
+	$(PHP) php artisan measurements:backup
+
+restoredb: ## Restore SQL dump (usage: make restoredb FILE=storage/db_backups/db.sql [MERGE=true|false])
+	@if [ -z "$(FILE)" ]; then \
+		echo "Usage: make restoredb FILE=storage/db_backups/db.sql [MERGE=true|false]"; \
+		exit 1; \
+	fi
+	$(PHP) php artisan measurements:restore $(FILE) --merge=$(MERGE)
+
+sensor: ## Toggle sensor ingestion (usage: make sensor on|off)
+	@if [ -z "$(SENSOR_STATE)" ]; then \
+		echo "Usage: make sensor on|off"; \
+		exit 1; \
+	fi
+	$(PHP) php artisan sensor:set $(SENSOR_STATE)
+
+on off:
+	@:
 
 logs: ## Follow docker compose logs
 	$(COMPOSE) logs -f
